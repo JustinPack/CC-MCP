@@ -45,7 +45,8 @@ From the cloned folder:
 
 ```sh
 docker build -t cc-mcp .
-docker run --rm -i --read-only --network none cc-mcp
+docker run --rm -i --read-only --network none \
+  --cap-drop=ALL --security-opt=no-new-privileges cc-mcp
 ```
 
 For a client-managed container, replace the `cc-mcp` entry above with:
@@ -53,11 +54,17 @@ For a client-managed container, replace the `cc-mcp` entry above with:
 ```json
 {
   "command": "docker",
-  "args": ["run", "--rm", "-i", "--read-only", "--network", "none", "cc-mcp"]
+  "args": [
+    "run", "--rm", "-i", "--read-only", "--network", "none",
+    "--cap-drop=ALL", "--security-opt=no-new-privileges", "cc-mcp"
+  ]
 }
 ```
 
-Keep `-i`; do not add `-t`. No ports or volumes are needed.
+Keep `-i`; do not add `-t`. No ports or volumes are needed. The image runs as
+an unprivileged user and its application files and reference database are
+read-only. This is a stdio MCP server, so deploy it as a client-managed
+`docker run` process rather than as a port-based Compose or web service.
 
 ## Reference requests
 

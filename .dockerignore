@@ -1,0 +1,10 @@
+**
+!Dockerfile
+!requirements.txt
+!LICENSE
+!NOTICE.md
+!server/
+!server/mcp_server.py
+!server/reference_store.py
+!server/data/
+!server/data/cc14_index.db

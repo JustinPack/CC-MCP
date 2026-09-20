@@ -96,6 +96,19 @@ For direct MCP clients, these are JSON-RPC `tools/call` requests **after the MCP
 
 Search returns source URLs, excerpts, and `section_ref` values. The second request reads a section returned by the first. For other lookups, pass the returned `section_ref` as `section_id`. Sections are paged at 8,000 characters; resend the same `section_id` with `"cursor":"<next_cursor>"` until `next_cursor` is `null`. Results include JSON in `structuredContent` and a text equivalent in `content`.
 
+## Development checks
+
+After installing the requirements, run the annotation regression test:
+
+```sh
+.venv/bin/python -m unittest discover -s tests -v
+```
+
+It checks that every advertised tool explicitly serializes all four boolean
+annotation hints. All current tools are read-only, non-destructive, idempotent,
+and closed-world because they only query the bundled local index.
+Handler-level coverage is still pending.
+
 ## License
 
 Server code: [MIT](LICENSE). Bundled reference material retains its upstream terms; see [NOTICE.md](NOTICE.md). Independent project, not affiliated with or endorsed by 1EdTech.

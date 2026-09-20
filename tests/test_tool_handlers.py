@@ -261,6 +261,31 @@ class ToolHandlerTests(unittest.IsolatedAsyncioTestCase):
                     self.assertNotIn(str(missing), json.dumps(payload))
         self.assertFalse(missing.exists())
 
+    async def test_handlers_close_database_connections(self):
+        connect = self.store._connect
+        connections = []
+
+        def tracked_connect():
+            connection = connect()
+            connections.append(connection)
+            return connection
+
+        try:
+            with patch.object(self.store, "_connect", side_effect=tracked_connect):
+                search = await self.invoke("search_spec", {"query": "manifest", "limit": 1})
+                await self.invoke("get_section", {"section_id": search["results"][0]["section_ref"]})
+                await self.invoke("lookup_definition", {"term": "manifest"})
+                await self.invoke("get_schema_component", {"namespace": NAMESPACE, "name": "manifest"})
+                await self.invoke("list_documents")
+            self.assertEqual(len(connections), 5)
+            for index, connection in enumerate(connections):
+                with self.subTest(connection=index):
+                    with self.assertRaisesRegex(sqlite3.ProgrammingError, "closed"):
+                        connection.execute("SELECT 1")
+        finally:
+            for connection in connections:
+                connection.close()
+
     def test_database_connection_rejects_writes(self):
         connection = self.store._connect()
         try:

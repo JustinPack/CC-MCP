@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from contextlib import closing
 import re
 import sqlite3
 from pathlib import Path
@@ -56,7 +57,7 @@ class ReferenceStore:
         sql += " ORDER BY rank, d.id, s.section_id LIMIT ?"
         parameters.append(limit)
 
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             rows = connection.execute(sql, parameters).fetchall()
         return [
             {
@@ -77,7 +78,7 @@ class ReferenceStore:
             where_clause = "s.section_id = ?"
             parameters = (section_id,)
 
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             rows = connection.execute(
                 f"""
                 SELECT
@@ -119,7 +120,7 @@ class ReferenceStore:
     def lookup_definition(self, term: str) -> dict[str, object]:
         """Find exact XSD declarations and ranked prose mentioning a term."""
         match_query = self._fts_query(term)
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             component_rows = connection.execute(
                 """
                 SELECT
@@ -181,7 +182,7 @@ class ReferenceStore:
 
     def get_schema_component(self, namespace: str, name: str) -> dict[str, object]:
         """Return every exact named global XSD component in a namespace."""
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             rows = connection.execute(
                 """
                 SELECT
@@ -233,6 +234,6 @@ class ReferenceStore:
             sql += " WHERE d.kind = ?"
             parameters = (kind,)
         sql += " GROUP BY d.id ORDER BY d.kind, d.title, d.id"
-        with self._connect() as connection:
+        with closing(self._connect()) as connection:
             rows = connection.execute(sql, parameters).fetchall()
         return [dict(row) for row in rows]

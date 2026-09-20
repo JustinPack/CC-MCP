@@ -1,11 +1,13 @@
 # CC MCP
+M8ven Badge
+
+[![M8ven Score](https://m8ven.ai/badge/mcp/justinpack-cc-mcp-e3c6nq?v=735272f820383226f2cb5d25d2009fda)](https://m8ven.ai/mcp/justinpack-cc-mcp-e3c6nq)
+
 
 A Common Cartridge 1.4 specification reference MCP server for building Common Cartridge 1.4 course packages. Give your MCP-compatible assistant searchable specification text, implementation guidance, and XML schema definitions for manifests, metadata, resources, and more.
 
 Read-only, local, and offline after installation. Includes a ready-to-use reference index; no API keys required. This is a reference lookup service, not a package validator or certification tool.
 
-M8ven Badge
-[![M8ven Score](https://m8ven.ai/badge/mcp/justinpack-cc-mcp-e3c6nq?v=735272f820383226f2cb5d25d2009fda)](https://m8ven.ai/mcp/justinpack-cc-mcp-e3c6nq)
 
 ## Launch locally
 

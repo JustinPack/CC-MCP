@@ -1,6 +1,5 @@
 # CC MCP
-M8ven Badge
-
+[![M8ven Score](https://m8ven.ai/badge/mcp/justinpack-cc-mcp-e3c6nq)](https://m8ven.ai/mcp/justinpack-cc-mcp-e3c6nq)
 [![M8ven Score](https://m8ven.ai/badge/mcp/justinpack-cc-mcp-e3c6nq?v=735272f820383226f2cb5d25d2009fda)](https://m8ven.ai/mcp/justinpack-cc-mcp-e3c6nq)
 
 

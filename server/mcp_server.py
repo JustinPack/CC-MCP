@@ -18,6 +18,7 @@ from mcp.types import (
     PaginatedRequestParams,
     TextContent,
     Tool,
+    ToolAnnotations,
 )
 
 if __package__:
@@ -47,9 +48,17 @@ def _object_schema(
     return schema
 
 
+# All current handlers query only the bundled SQLite index (opened mode=ro).
+# They neither mutate state nor access external systems; repeated calls are safe.
 TOOLS = [
     Tool(
         name="search_spec",
+        annotations=ToolAnnotations(
+            read_only_hint=True,
+            destructive_hint=False,
+            idempotent_hint=True,
+            open_world_hint=False,
+        ),
         description="Search indexed CC1.4 prose and schemas using ranked FTS5 keyword matching.",
         input_schema=_object_schema(
             {
@@ -67,6 +76,12 @@ TOOLS = [
     ),
     Tool(
         name="get_section",
+        annotations=ToolAnnotations(
+            read_only_hint=True,
+            destructive_hint=False,
+            idempotent_hint=True,
+            open_world_hint=False,
+        ),
         description=(
             "Read one indexed section in 8,000-character pages. Prefer the "
             "document_id::section_id reference returned by search_spec."
@@ -84,6 +99,12 @@ TOOLS = [
     ),
     Tool(
         name="lookup_definition",
+        annotations=ToolAnnotations(
+            read_only_hint=True,
+            destructive_hint=False,
+            idempotent_hint=True,
+            open_world_hint=False,
+        ),
         description="Find XSD declarations and ranked definitional text for a term.",
         input_schema=_object_schema(
             {"term": {"type": "string", "minLength": 1}},
@@ -92,6 +113,12 @@ TOOLS = [
     ),
     Tool(
         name="get_schema_component",
+        annotations=ToolAnnotations(
+            read_only_hint=True,
+            destructive_hint=False,
+            idempotent_hint=True,
+            open_world_hint=False,
+        ),
         description="Return complete indexed XSD declarations for an exact namespace and name.",
         input_schema=_object_schema(
             {
@@ -103,6 +130,12 @@ TOOLS = [
     ),
     Tool(
         name="list_documents",
+        annotations=ToolAnnotations(
+            read_only_hint=True,
+            destructive_hint=False,
+            idempotent_hint=True,
+            open_world_hint=False,
+        ),
         description="List indexed reference documents, optionally filtered by kind.",
         input_schema=_object_schema(
             {

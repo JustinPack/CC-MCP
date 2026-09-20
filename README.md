@@ -98,16 +98,21 @@ Search returns source URLs, excerpts, and `section_ref` values. The second reque
 
 ## Development checks
 
-After installing the requirements, run the annotation regression test:
+After installing the requirements, run the test suite (no extra test dependencies):
 
 ```sh
 .venv/bin/python -m unittest discover -s tests -v
 ```
 
-It checks that every advertised tool explicitly serializes all four boolean
-annotation hints. All current tools are read-only, non-destructive, idempotent,
-and closed-world because they only query the bundled local index.
-Handler-level coverage is still pending.
+The suite checks that every advertised tool explicitly serializes all four
+boolean annotation hints and exercises all five handlers against temporary
+copies of the bundled index. It covers successful results, text/structured JSON
+consistency, filters and limits, pagination, invalid arguments, missing results,
+data-access errors, repeat calls, and read-only database access. Tests run offline
+without API credentials and leave the bundled database untouched.
+
+All current tools are read-only, non-destructive, idempotent, and closed-world
+because they only query the bundled local index.
 
 ## License
 

@@ -4,6 +4,9 @@ A Common Cartridge 1.4 specification reference MCP server for building Common Ca
 
 Read-only, local, and offline after installation. Includes a ready-to-use reference index; no API keys required. This is a reference lookup service, not a package validator or certification tool.
 
+M8ven Badge
+[![M8ven Score](https://m8ven.ai/badge/mcp/justinpack-cc-mcp-e3c6nq?v=735272f820383226f2cb5d25d2009fda)](https://m8ven.ai/mcp/justinpack-cc-mcp-e3c6nq)
+
 ## Launch locally
 
 Requires Python 3.11+ with SQLite FTS5 support (included in standard Python distributions).
